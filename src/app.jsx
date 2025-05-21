@@ -2,6 +2,9 @@ import {createRoot} from "react-dom/client"
 import { Header } from "./components/Header";
 import { TeamMember } from "./components/team_member/TeamMember";
 
+// TODO:
+//Fortsätt på TeamMember komponent
+
 function App(){
     const categories = ["UX", "Backend", "Frontend"]
     return(

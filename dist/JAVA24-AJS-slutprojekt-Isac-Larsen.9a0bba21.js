@@ -678,6 +678,8 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _client = require("react-dom/client");
 var _header = require("./components/Header");
 var _teamMember = require("./components/team_member/TeamMember");
+// TODO:
+//Fortsätt på TeamMember komponent
 function App() {
     const categories = [
         "UX",
@@ -688,20 +690,20 @@ function App() {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _header.Header), {}, void 0, false, {
                 fileName: "src/app.jsx",
-                lineNumber: 9,
+                lineNumber: 12,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _teamMember.TeamMember), {
                 categories: categories
             }, void 0, false, {
                 fileName: "src/app.jsx",
-                lineNumber: 10,
+                lineNumber: 13,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/app.jsx",
-        lineNumber: 8,
+        lineNumber: 11,
         columnNumber: 9
     }, this);
 }
@@ -709,7 +711,7 @@ _c = App;
 const root = (0, _client.createRoot)(document.querySelector("#root"));
 root.render(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(App, {}, void 0, false, {
     fileName: "src/app.jsx",
-    lineNumber: 16,
+    lineNumber: 19,
     columnNumber: 13
 }, undefined));
 var _c;
