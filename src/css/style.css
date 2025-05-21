@@ -1,0 +1,22 @@
+/* * {
+    display: inline-block;
+} */
+
+#headerContainer {
+    background-color: cadetblue;
+    padding: 5px;
+}
+
+#newMemberContainer {
+    /* border: 1px solid red; */
+    height: 1000px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+#newMemberForm{
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+}

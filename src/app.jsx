@@ -1,9 +1,13 @@
 import {createRoot} from "react-dom/client"
+import { Header } from "./components/Header";
+import { TeamMember } from "./components/team_member/TeamMember";
 
 function App(){
+    const categories = ["UX", "Backend", "Frontend"]
     return(
         <div>
-            <h1>Test</h1>
+            <Header/>
+            <TeamMember categories={categories}/>
         </div>
     )
 }
