@@ -1,10 +1,12 @@
 import { TeamMemberForm } from "./TeamMemberForm";
+import { TeamMemberList } from "./TeamMemberList";
 
-export function TeamMember({categories}){
+export function TeamMember({categories, members}){
     return(
-        <div>
+        <div id="teamContainer">
+            <h2>TEAM</h2>
             <TeamMemberForm categories={categories}/>
-            {/* <TeamMemberList/> */}
+            <TeamMemberList members={members}/>
         </div>
         
     )
