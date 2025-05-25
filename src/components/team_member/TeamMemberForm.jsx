@@ -1,7 +1,7 @@
 export function TeamMemberForm({categories}){
     return(
         <div id="newMemberContainer">
-            <h3>Lägg till ny medlem:</h3>
+            <h3>Add new member</h3>
             <form id="newMemberForm">
                 <input type="text" name="memberName" id="inputNewMember" placeholder="Namn..." />
                 <select name="categorySelect" id="categorySelect">

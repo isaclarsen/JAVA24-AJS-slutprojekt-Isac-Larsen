@@ -1,7 +1,7 @@
 export function FilterOptions({members, categories}){
     return(
         <div id="filterContainer">
-            <p>Filter By:</p>
+            <p>Filter By</p>
                 <form>
                     <label>Member: </label>
                     <select>

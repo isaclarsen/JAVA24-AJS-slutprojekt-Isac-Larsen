@@ -1,7 +1,7 @@
 export function SortOptions(){
     return(
         <div id="filterContainer">
-            <p>Sort By:</p>
+            <p>Sort By</p>
                 <form>
                     <label>Timestamp: </label>
                     <select>
