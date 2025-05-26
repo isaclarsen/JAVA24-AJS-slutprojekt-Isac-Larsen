@@ -2,10 +2,19 @@
     --colorTheme: rgba(118, 232, 83, 0.642);
 }
 
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
 /* rgba(118, 232, 83, 0.642) */
 
 * {
     font-family: Raleway;
+}
+
+.hidden{
+    display: none;
 }
 
 
@@ -53,8 +62,7 @@ button {
 #headerContainer {
     background-color: var(--colorTheme);
     padding: 10px;
-    border-radius: 8px;
-    text-align: center;
+    fill: lightgreen;
 }
 
 #newMemberContainer {
@@ -104,7 +112,22 @@ button {
     padding: 8px;
     list-style-type: none;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    position: relative;
 }
+
+.deleteIcon {
+    width: 12px;
+    height: 12px;
+}
+
+.deleteIconContainer {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+}
+
+
 
 #memberCardContainer:hover{
     transform: scale(1.05);
@@ -157,6 +180,7 @@ button {
 
 #addTaskContainer button{
     width: 10%;
+    /* margin-left: 1050px; */
 }
 
 #taskBoard {
@@ -173,7 +197,7 @@ button {
 
 .taskColumn {
   flex: 1;
-  min-height: 927px;
+  min-height: 773px;
   padding: 10px;
   border-radius: 10px;
   margin: 10px;
@@ -268,5 +292,7 @@ button:hover {
     color: white;
 }
 
-
-
+.taskCard,
+#memberCardContainer {
+  position: relative;
+}

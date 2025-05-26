@@ -1,20 +1,48 @@
-export function TaskCard({ task, members }) {
+export function TaskCard({ task, members, updateTask, deleteTask }) {
+
+  function handleChange(event){
+    const member = event.target.value;
+
+    if(!member){
+      return
+    }
+
+    const updatedTask = {
+      ...task,
+      member,
+    }
+
+    updateTask(updatedTask);
+    
+  }
+
+  function handleInProgressClick(){
+    updateTask(task);
+  }
+
+  function handleFinishedClick(){
+    deleteTask(task.id);
+  }
+
   return(
     <div key={task.id} className="taskCard">
       <h4>{task.task}</h4>
       <span className={`taskTag${task.category}`}>{task.category}</span>
       <p>Created: {task.timestamp}</p>
+      <div className="deleteIconContainer">
+        <img className="deleteIcon" src="https://cdn-icons-png.flaticon.com/512/70/70757.png" alt="delete" onClick={handleFinishedClick}/>
+      </div>
 
       {
         task.status === "new" && (
-          <select name="memberList" id="taskCardAssignMember">
+          <select name="memberList" id="taskCardAssignMember" onChange={handleChange}>
               <option value="" defaultValue={true}>
                  Assign to...
               </option>
             {
               members.filter(member => member.category === task.category)
               .map(member =>
-                <option key={member.name} value={member.name}>{member.name}</option>
+                <option key={member.id} value={member.name}>{member.name}</option>
               )
             }
           </select>
@@ -24,8 +52,8 @@ export function TaskCard({ task, members }) {
       {
         task.status === "in-progress" && (
           <>
-            <p>Assigned to: {task.assignedTo}</p>
-            <button id="completeButton">Mark as complete</button>
+            <p>Assigned to: {task.member}</p>
+            <button onClick={handleInProgressClick} id="completeButton">Mark as complete</button>
           </>
         )
       }
@@ -33,8 +61,8 @@ export function TaskCard({ task, members }) {
       {
         task.status === "finished" && (
           <>
-            <p>Completed by: {task.assignedTo}</p>
-            <button id="deleteButton">Delete</button>
+            <p>Completed by: {task.member}</p>
+            <button onClick={handleFinishedClick} id="deleteButton">Delete</button>
           </>
         )
       }

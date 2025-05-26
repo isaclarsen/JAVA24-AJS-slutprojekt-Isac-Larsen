@@ -1,6 +1,6 @@
 import { TaskCard } from "./TaskCard";
 
-export function TaskColumns({tasks, members}) {
+export function TaskColumns({tasks, members, updateTask, deleteTask}) {
   return (
     <div id="taskColumnsContainer">
         <div className="taskColumn">
@@ -12,6 +12,8 @@ export function TaskColumns({tasks, members}) {
                 key={task.id}
                 task={task}
                 members={members}
+                updateTask={updateTask}
+                deleteTask={deleteTask}
                 />
               ))
             }
@@ -25,6 +27,8 @@ export function TaskColumns({tasks, members}) {
                 key={task.id}
                 task={task}
                 members={members}
+                updateTask={updateTask}
+                deleteTask={deleteTask}
                 />
               ))
             }
@@ -38,6 +42,7 @@ export function TaskColumns({tasks, members}) {
                 key={task.id}
                 task={task}
                 members={members}
+                deleteTask={deleteTask}
                 />
               ))
             }

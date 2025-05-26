@@ -5,102 +5,40 @@ import { FilterSort } from "./components/filter_sort/FilterSort";
 import { SortOptions } from "./components/filter_sort/SortOptions";
 import { TaskBoard } from "./components/task_board/TaskBoard";
 import { TaskColumn } from "./components/task_board/TaskColumn";
+import { useEffect, useState } from "react";
+import { onValue, ref } from "firebase/database";
+import { dataBase } from "./firebase/firebaseconfig";
 
 // TODO:
 //Fortsätt på TeamMember komponent
 
 function App(){
-    const categories = ["UX", "Backend", "Frontend", "Fullstack", "Sminkare"]
+    const categories = ["UX", "Backend", "Frontend", "Fullstack", "Sminkare", "Städare"]
 
-    const members = [
-        {
-            name: "Isac",
-            category: "Fullstack"
-        },
-        {
-            name: "Julia",
-            category: "UX"
-        },
-        {
-            name: "Enzo",
-            category: "Backend"
-        },
-        {
-            name: "Hannah",
-            category: "Sminkare"
-        },
-        {
-            name: "Karl",
-            category: "Frontend"
-        },
-    ]
+    const [members, setMembers] = useState([]);
+        const membersRef = ref(dataBase, "/members");
+        
+        useEffect(() => {
+    
+            onValue(membersRef, (snapshot) => {
+                const members = snapshot.val();
+                console.log(members);
+                
+    
+                if(!members){
+                    setMembers([]);
+                    return;
+                }
+    
+                const membersArray = Object.entries(members).map(([id, member]) => ({
+                    id,
+                    ...member
+                }));
+                setMembers(membersArray);
+            });
+            return;
+        },[])
 
-    const timestamp = new Date().toLocaleString("sv-SE", {
-        month: "short",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit"
-    });
-
-
-    const tasks = [
-        {
-            id: 1,
-            task: "Göra disken",
-            timestamp: timestamp,
-            category: "Fullstack",
-            status: "new",
-            assignedTo: ""
-        },
-        {
-            id: 2,
-            task: "Torka disken",
-            timestamp: timestamp,
-            category: "UX",
-            status: "new",
-            assignedTo: ""
-        },
-        {
-            id: 3,
-            task: "Torka disken",
-            timestamp: timestamp,
-            category: "UX",
-            status: "finished",
-            assignedTo: "Julia"
-        },
-        {
-            id: 4,
-            task: "Torka disken",
-            timestamp: timestamp,
-            category: "UX",
-            status: "in-progress",
-            assignedTo: "Julia"
-        },
-        {
-            id: 5,
-            task: "Laga mat",
-            timestamp: timestamp,
-            category: "Frontend",
-            status: "in-progress",
-            assignedTo: "Karl"
-        },
-        {
-            id: 6,
-            task: "Äta mat",
-            timestamp: timestamp,
-            category: "Backend",
-            status: "finished",
-            assignedTo: "Enzo"
-        },
-        {
-            id: 7,
-            task: "Sminka någon",
-            timestamp: timestamp,
-            category: "Sminkare",
-            status: "new",
-            assignedTo: ""
-        }
-    ]
 
     return(
         <div id="container">
@@ -110,7 +48,7 @@ function App(){
                     <TeamMember categories={categories} members={members}/>
                     <FilterSort categories={categories} members={members}/>
                 </div>
-                <TaskBoard categories={categories} tasks={tasks} members={members}/>
+                <TaskBoard categories={categories} members={members}/>
             </div>
         </div>
     )

@@ -1,9 +1,25 @@
-export function AddTaskForm({tasks, categories}){
+export function AddTaskForm({categories, addTask}){
+
+    function handleSubmit(event){
+        event.preventDefault();
+        const formData = new FormData(event.target)
+        const task = formData.get("newTask")
+        const category = formData.get("categorySelect")
+        
+        if(!task || !category){
+            alert("Please fill out both task and category!")
+            return;
+        }
+
+        addTask({task, category})
+        event.target.reset();
+    }
+    
     return(
     <div id="addTaskContainer">
         <h2>ADD NEW TASK</h2>
-            <form>
-                <input type="text" placeholder="Task..." />
+            <form onSubmit={handleSubmit}>
+                <input type="text" name="newTask" placeholder="Task..." />
                 <br/>
                 <select name="categorySelect" id="categorySelect">
                     {
