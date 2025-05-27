@@ -19,7 +19,7 @@ export function TeamMemberForm({categories, addMember}){
         <div id="newMemberContainer">
             <h3>Add new member</h3>
             <form id="newMemberForm" onSubmit={handleSubmit}>
-                <input type="text" name="memberName" id="inputNewMember" placeholder="Namn..." />
+                <input type="text" name="memberName" id="inputNewMember" placeholder="Name..." />
                 <select name="categorySelect" id="categorySelect">
                     {
                         categories.map(category =>

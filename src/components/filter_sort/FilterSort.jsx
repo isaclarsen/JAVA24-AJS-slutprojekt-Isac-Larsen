@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { FilterOptions } from "./FilterOptions";
 import { SortOptions } from "./SortOptions";
 

@@ -1,14 +1,15 @@
-import { onValue, push, ref, remove, update } from "firebase/database";
 import { AddTaskForm } from "./AddTaskForm";
+import { SearchTaskForm } from "./SearchTaskForm";
 import { TaskColumn } from "./TaskColumn";
-import { dataBase } from "../../firebase/firebaseconfig";
-import { useEffect, useState } from "react";
 
-export function TaskBoard({addTask, updateTask, deleteTask, members, categories, filteredTasks}){
+export function TaskBoard({addTask, updateTask, deleteTask, members, categories, filteredTasks, searchQuery, setSearchQuery}){
     
     return(
         <div id="taskBoard">
-            <AddTaskForm categories={categories} addTask={addTask}/>
+            <div id="topTaskBoardContainer">
+                <AddTaskForm categories={categories} addTask={addTask}/>
+                <SearchTaskForm searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
+            </div>
             <TaskColumn categories={categories} members={members} filteredTasks={filteredTasks} updateTask={updateTask} deleteTask={deleteTask}/>
         </div>
     )

@@ -28,6 +28,7 @@ export function TaskCard({ task, members, updateTask, deleteTask }) {
       <h4>{task.task}</h4>
       <span className={`taskTag${task.category}`}>{task.category}</span>
       <p>
+        {/* Formaterar datum till mer läsvänligt */}
           Created: {new Date(task.timestamp).toLocaleString("sv-SE", {
             month: "short",
             day: "2-digit",

@@ -1,5 +1,5 @@
 import {createRoot} from "react-dom/client"
-import { Header } from "./components/Header";
+import { Header } from "./components/header/Header";
 import { TeamMember } from "./components/team_member/TeamMember";
 import { FilterSort } from "./components/filter_sort/FilterSort";
 import { TaskBoard } from "./components/task_board/TaskBoard";
@@ -7,8 +7,6 @@ import { useEffect, useState } from "react";
 import { onValue, push, ref, remove, update } from "firebase/database";
 import { dataBase } from "./firebase/firebaseconfig";
 
-// TODO:
-//Fortsätt på TeamMember komponent
 const categories = ["UX", "Backend", "Frontend", "Fullstack", "Städare"]
 
 function App(){
@@ -18,13 +16,13 @@ function App(){
     const [selectedCategory, setSelectedCategory] = useState("");
     const [sortBy, setSortBy] = useState("timestamp")
     const [sortDirection, setSortDirection] = useState("asc");
-    const membersRef = ref(dataBase, "/members");
-    const tasksRef = ref(dataBase, "/tasks");
+    const [searchQuery, setSearchQuery] = useState("");
 
     
     // ADD TASK
     function addTask({task, category}){
 
+        //Till ISOString för att kunna validera sortering
         const timestamp = new Date().toISOString();
 
         try{
@@ -35,7 +33,7 @@ function App(){
                 task: task,
                 category: category,
                 timestamp: timestamp,
-                status: "new",
+                status: "new", //Standard för ny task är "new"
                 member: ""
             };
     
@@ -49,11 +47,11 @@ function App(){
     // UPDATE TASK
     function updateTask(task){
         const taskRef = ref(dataBase, `/tasks/${task.id}`)
-
+        //Från "New" => "In-progress"
         if(task.status === "new"){
             update(taskRef, {status: "in-progress", member: task.member})
             .catch(error => console.log(error));
-            
+        //Från "In-Progress" => "Finished"
         }else if(task.status === "in-progress"){
             update(taskRef, {status: "finished"})
             .catch(error => console.log(error));
@@ -67,14 +65,34 @@ function App(){
         remove(taskRef)
     }
 
+    function changeTheme(theme) {
+        const root = document.documentElement;
 
-    //FILTER & SORT
+        if(theme === "original"){
+            root.style.setProperty('--colorTheme', 'rgba(118, 232, 83, 0.642)');
+
+        }else if (theme === "red") {
+            root.style.setProperty('--colorTheme', 'rgba(232, 83, 103, 0.642)');
+
+        } else if (theme === "blue") {
+            root.style.setProperty('--colorTheme', 'rgba(83, 179, 232, 0.642)');
+
+        } else if (theme === "pink") {
+            root.style.setProperty('--colorTheme', 'rgba(232, 83, 168, 0.642)');
+        }
+        
+}
+
+
+
+    //FILTER, SORT & SEARCH
     const filteredTasks = tasks
     .filter(task => {
-        return (
-        (selectedMember === "" || task.member === selectedMember) &&
-        (selectedCategory === "" || task.category === selectedCategory)
-        );
+        const matchesMember = selectedMember === "" || task.member === selectedMember;
+        const matchesCategory = selectedCategory === "" || task.category === selectedCategory;
+        const matchesSearch = task.task.toLowerCase().includes(searchQuery.toLowerCase());
+
+        return matchesMember && matchesCategory && matchesSearch;
     })
     .sort((a, b) => {
         if (sortBy === "name") {
@@ -82,64 +100,64 @@ function App(){
             ? a.task.localeCompare(b.task)
             : b.task.localeCompare(a.task);
         } else if (sortBy === "timestamp") {
-            console.log("timestamps being sorted:");
-            tasks.forEach(task => console.log(task.timestamp, new Date(task.timestamp)));
-
         return sortDirection === "asc"
             ? new Date(a.timestamp) - new Date(b.timestamp)
             : new Date(b.timestamp) - new Date(a.timestamp);
         }
-        return 0; // No sorting applied
+        return 0;
     });
 
 
-        
-        useEffect(() => {
+
+    //FETCH MEMBERS
+    useEffect(() => {
+    const membersRef = ref(dataBase, "/members");
     
-            onValue(membersRef, (snapshot) => {
-                const members = snapshot.val();
-                console.log(members);
+        onValue(membersRef, (snapshot) => {
+            const members = snapshot.val();
+            console.log(members);
                 
     
-                if(!members){
-                    setMembers([]);
-                    return;
-                }
-    
-                const membersArray = Object.entries(members).map(([id, member]) => ({
-                    id,
-                    ...member
-                }));
-                setMembers(membersArray);
-            });
-            return;
-        },[])
-
-        //FETCH TASKS
-        useEffect(() => {
-        
-                onValue(tasksRef, (snapshot) => {
-                    const tasks = snapshot.val();
-                    console.log(tasks);
-                    
-                    if(!tasks){
-                        setTasks([]);
-                        return;
-                    }
-        
-                    const tasksArray = Object.entries(tasks).map(([id, task]) => ({
-                        id,
-                        ...task
-                    }));
-                    setTasks(tasksArray);
-                });
+            if(!members){
+                setMembers([]);
                 return;
-            },[])
+            }
+    
+            const membersArray = Object.entries(members).map(([id, member]) => ({
+                id,
+                ...member
+            }));
+            setMembers(membersArray);
+        });
+        return;
+    },[])
+
+     //FETCH TASKS
+    useEffect(() => {
+        const tasksRef = ref(dataBase, "/tasks");
+        
+        onValue(tasksRef, (snapshot) => {
+            const tasks = snapshot.val();
+            console.log(tasks);
+                    
+            if(!tasks){
+                setTasks([]);
+                return;
+            }
+        
+            const tasksArray = Object.entries(tasks).map(([id, task]) => ({
+                id,
+                ...task
+            }));
+            setTasks(tasksArray);
+        });
+        return;
+    },[])
 
 
     return(
         <div id="container">
-            <Header/>
+            <Header changeTheme={changeTheme}/>
             <div id="topSection">
                 <div id="leftSidebar">
                     <TeamMember categories={categories} members={members}/>
@@ -163,6 +181,8 @@ function App(){
                 addTask={addTask}
                 updateTask={updateTask}
                 deleteTask={deleteTask}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
                 />
             </div>
         </div>

@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
 import { TeamMemberForm } from "./TeamMemberForm";
 import { TeamMemberList } from "./TeamMemberList";
-import { onValue, push, ref, remove, update } from "firebase/database";
+import { push, ref, remove, update } from "firebase/database";
 import { dataBase } from "../../firebase/firebaseconfig";
 
 export function TeamMember({categories, members}){
