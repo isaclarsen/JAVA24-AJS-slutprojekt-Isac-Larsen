@@ -1,12 +1,14 @@
 import { TaskCard } from "./TaskCard";
 
-export function TaskColumns({tasks, members, updateTask, deleteTask}) {
+export function TaskColumns({filteredTasks, members, updateTask, deleteTask}) {
+  console.log(filteredTasks);
+  
   return (
     <div id="taskColumnsContainer">
         <div className="taskColumn">
             <h3>NEW</h3>
             {
-              tasks.filter(task => task.status === "new")
+              filteredTasks.filter(task => task.status === "new")
               .map(task => (
                 <TaskCard
                 key={task.id}
@@ -21,7 +23,7 @@ export function TaskColumns({tasks, members, updateTask, deleteTask}) {
         <div className="taskColumn">
             <h3>IN-PROGRESS</h3>
             {
-              tasks.filter(task => task.status === "in-progress")
+              filteredTasks.filter(task => task.status === "in-progress")
               .map(task => (
                 <TaskCard
                 key={task.id}
@@ -36,7 +38,7 @@ export function TaskColumns({tasks, members, updateTask, deleteTask}) {
         <div className="taskColumn">
             <h3>FINISHED</h3>
                         {
-              tasks.filter(task => task.status === "finished")
+              filteredTasks.filter(task => task.status === "finished")
               .map(task => (
                 <TaskCard
                 key={task.id}

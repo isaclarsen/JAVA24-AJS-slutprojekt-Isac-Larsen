@@ -23,12 +23,18 @@ export function TaskCard({ task, members, updateTask, deleteTask }) {
   function handleFinishedClick(){
     deleteTask(task.id);
   }
-
   return(
-    <div key={task.id} className="taskCard">
+    <div className="taskCard">
       <h4>{task.task}</h4>
       <span className={`taskTag${task.category}`}>{task.category}</span>
-      <p>Created: {task.timestamp}</p>
+      <p>
+          Created: {new Date(task.timestamp).toLocaleString("sv-SE", {
+            month: "short",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit"
+        })}
+      </p>
       <div className="deleteIconContainer">
         <img className="deleteIcon" src="https://cdn-icons-png.flaticon.com/512/70/70757.png" alt="delete" onClick={handleFinishedClick}/>
       </div>
