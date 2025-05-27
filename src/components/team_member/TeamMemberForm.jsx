@@ -27,7 +27,7 @@ export function TeamMemberForm({categories, addMember}){
                         )
                     }
                 </select>
-                <button>Lägg till</button>
+                <button>Add</button>
             </form>
         </div>
     )

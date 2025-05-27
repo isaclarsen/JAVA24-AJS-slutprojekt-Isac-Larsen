@@ -7,9 +7,12 @@ import { useEffect, useState } from "react";
 import { onValue, push, ref, remove, update } from "firebase/database";
 import { dataBase } from "./firebase/firebaseconfig";
 
-const categories = ["UX", "Backend", "Frontend", "Fullstack", "Städare"]
+const categories = ["UX", "Backend", "Frontend", "Fullstack", "LIA"]
 
 function App(){
+    const tasksRef = ref(dataBase, "/tasks");
+    const membersRef = ref(dataBase, "/members");
+
     const [members, setMembers] = useState([]);
     const [tasks, setTasks] = useState([]);
     const [selectedMember, setSelectedMember] = useState("");
@@ -111,7 +114,6 @@ function App(){
 
     //FETCH MEMBERS
     useEffect(() => {
-    const membersRef = ref(dataBase, "/members");
     
         onValue(membersRef, (snapshot) => {
             const members = snapshot.val();
@@ -134,7 +136,6 @@ function App(){
 
      //FETCH TASKS
     useEffect(() => {
-        const tasksRef = ref(dataBase, "/tasks");
         
         onValue(tasksRef, (snapshot) => {
             const tasks = snapshot.val();
