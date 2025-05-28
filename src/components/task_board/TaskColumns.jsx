@@ -1,7 +1,6 @@
 import { TaskCard } from "./TaskCard";
 
 export function TaskColumns({filteredTasks, members, updateTask, deleteTask}) {
-  console.log(filteredTasks);
   
   return (
     <div id="taskColumnsContainer">

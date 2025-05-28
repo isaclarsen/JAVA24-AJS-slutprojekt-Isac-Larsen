@@ -1,11 +1,4 @@
-export function FilterOptions({
-  selectedMember,
-  setSelectedMember,
-  selectedCategory,
-  setSelectedCategory,
-  members,
-  categories
-}) {
+export function FilterOptions({ selectedMember, setSelectedMember, selectedCategory, setSelectedCategory, members, categories }) {
   return (
     <div id="filterContainer">
       <p>Filter By</p>

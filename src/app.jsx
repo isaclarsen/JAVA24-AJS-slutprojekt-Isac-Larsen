@@ -17,7 +17,7 @@ function App(){
     const [tasks, setTasks] = useState([]);
     const [selectedMember, setSelectedMember] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
-    const [sortBy, setSortBy] = useState("timestamp")
+    const [sortBy, setSortBy] = useState("timestamp");
     const [sortDirection, setSortDirection] = useState("asc");
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -44,12 +44,12 @@ function App(){
     
             }catch(error){
                 console.error("Something went wrong: " + error)
-            }
+            };
         }
     
     // UPDATE TASK
     function updateTask(task){
-        const taskRef = ref(dataBase, `/tasks/${task.id}`)
+        const taskRef = ref(dataBase, `/tasks/${task.id}`);
         //Från "New" => "In-progress"
         if(task.status === "new"){
             update(taskRef, {status: "in-progress", member: task.member})
@@ -63,9 +63,9 @@ function App(){
 
     //DELETE TASK
     function deleteTask(taskId){
-        const taskRef = ref(dataBase, `/tasks/${taskId}`)
+        const taskRef = ref(dataBase, `/tasks/${taskId}`);
 
-        remove(taskRef)
+        remove(taskRef);
     }
 
     function changeTheme(theme) {
@@ -117,8 +117,6 @@ function App(){
     
         onValue(membersRef, (snapshot) => {
             const members = snapshot.val();
-            console.log(members);
-                
     
             if(!members){
                 setMembers([]);
@@ -139,7 +137,6 @@ function App(){
         
         onValue(tasksRef, (snapshot) => {
             const tasks = snapshot.val();
-            console.log(tasks);
                     
             if(!tasks){
                 setTasks([]);
