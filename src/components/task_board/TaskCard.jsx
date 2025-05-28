@@ -34,7 +34,7 @@ export function TaskCard({ task, members, updateTask, deleteTask }) {
             day: "2-digit",
             hour: "2-digit",
             minute: "2-digit"
-        })};
+        })}
       </p>
       <div className="deleteIconContainer">
         <img className="deleteIcon" src="https://cdn-icons-png.flaticon.com/512/70/70757.png" alt="delete" onClick={handleFinishedClick}/>
@@ -51,7 +51,7 @@ export function TaskCard({ task, members, updateTask, deleteTask }) {
               .map(member =>
                 <option key={member.id} value={member.name}>{member.name}</option>
               )
-            };
+            }
           </select>
         )
       }
@@ -63,7 +63,7 @@ export function TaskCard({ task, members, updateTask, deleteTask }) {
             <button onClick={handleInProgressClick} id="completeButton">Mark as complete</button>
           </>
         )
-      };
+      }
 
       {
         task.status === "finished" && (
@@ -72,7 +72,7 @@ export function TaskCard({ task, members, updateTask, deleteTask }) {
             <button onClick={handleFinishedClick} id="deleteButton">Delete</button>
           </>
         )
-      };
+      }
     </div>
   )
 }
