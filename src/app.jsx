@@ -13,6 +13,7 @@ function App(){
     const tasksRef = ref(dataBase, "/tasks");
     const membersRef = ref(dataBase, "/members");
 
+    //useStates
     const [members, setMembers] = useState([]);
     const [tasks, setTasks] = useState([]);
     const [selectedMember, setSelectedMember] = useState("");
@@ -75,7 +76,7 @@ function App(){
             root.style.setProperty('--colorTheme', 'rgba(118, 232, 83, 0.642)');
 
         }else if (theme === "red") {
-            root.style.setProperty('--colorTheme', 'rgba(232, 83, 103, 0.642)');
+            root.style.setProperty('--colorTheme', 'rgba(220, 1, 30, 0.64)');
 
         } else if (theme === "blue") {
             root.style.setProperty('--colorTheme', 'rgba(83, 179, 232, 0.642)');
