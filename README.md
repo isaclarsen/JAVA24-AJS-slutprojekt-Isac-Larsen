@@ -35,3 +35,18 @@ Användaren kan:
 1. Skapa ett FireBase projekt.
 2. Skapa en realtime database
 3. Kopiera konfig som firebase tilldelar dig och kopiera in den i "firebaseconfig.js"
+
+## Utvecklaröversikt
+
+Applikationen är uppdelad i återanvändbara React-komponenter som var och en ansvarar för en specifik funktion:
+
+- **App.jsx** – Rotkomponenten. Hanterar all global state, databaskopplingar (Firebase) och skickar props till andra komponenter.
+- **Header/** – Visar applikationens toppdel samt tema-väljare (färgtema via CSS-variabel).
+- **TeamMember/** – Hanterar skapande och radering av teammedlemmar. Kommunicerar direkt med Firebase.
+- **FilterSort/** – Ansvarar för att användaren kan filtrera och sortera uppgifter (medlemmar, kategorier, tidsstämpel, namn).
+- **TaskBoard/** – Renderar alla uppgifter i tre kolumner baserat på status: "new", "in-progress", "finished". Innehåller även sökfält.
+- **TaskCard/** – Visar en enskild uppgift och innehåller logik för att tilldela, markera som klar och ta bort en task.
+- **firebase/firebaseconfig.js** – Firebase-konfiguration.
+
+Komponenterna är organiserade efter ansvar i undermappar för ökad läsbarhet.
+

@@ -1,28 +1,30 @@
-export function TaskCard({ task, members, updateTask, deleteTask }) {
+// TaskCard.jsx – Visar enskild uppgift samt hanterar interaktion (t.ex. tilldelning, slutförande, radering)
+import { ref, remove, update } from "firebase/database";
+import { dataBase } from "../../firebase/firebaseconfig";
 
-  function handleChange(event){
-    const member = event.target.value;
+export function TaskCard({ task, members, }) {
 
-    if(!member){
-      return;
-    }
+function handleChange(event){
+  const member = event.target.value;
+  if (!member) return;
 
-    const updatedTask = {
-      ...task,
-      member,
-    }
+  const taskRef = ref(dataBase, `/tasks/${task.id}`);
+  update(taskRef, {
+    member,
+    status: "in-progress"
+  });
+}
 
-    updateTask(updatedTask);
-    
+function handleInProgressClick(){
+    const taskRef = ref(dataBase, `/tasks/${task.id}`);
+    update(taskRef, { status: "finished" });
   }
 
-  function handleInProgressClick(){
-    updateTask(task);
+function handleFinishedClick(){
+    const taskRef = ref(dataBase, `/tasks/${task.id}`);
+    remove(taskRef);
   }
 
-  function handleFinishedClick(){
-    deleteTask(task.id);
-  }
   return(
     <div className="taskCard">
       <h4>{task.task}</h4>

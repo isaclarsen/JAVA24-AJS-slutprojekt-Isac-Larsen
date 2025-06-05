@@ -1,19 +1,32 @@
-export function AddTaskForm({categories, addTask}){
+import { push, ref, update } from "firebase/database";
+import { dataBase } from "../../firebase/firebaseconfig";
+
+export function AddTaskForm({categories}){
 
     function handleSubmit(event){
         event.preventDefault();
-        const formData = new FormData(event.target)
-        const task = formData.get("newTask")
-        const category = formData.get("categorySelect")
-        
-        if(!task || !category){
-            alert("Please fill out both task and category!")
-            return;
-        }
+        const task = event.target.newTask.value;
+        const category = event.target.categorySelect.value;
 
-        addTask({task, category})
+        if (!task || !category) return;
+
+        const timestamp = new Date().toISOString();
+        const taskId = push(ref(dataBase, "tasks")).key;
+        const newTasksRef = ref(dataBase, "tasks/" + taskId);
+
+        const newTask = {
+        task,
+        category,
+        timestamp,
+        status: "new",
+        member: ""
+    };
+
+        update(newTasksRef, newTask)
+        .catch(error => console.error("Something went wrong: " + error));
+
         event.target.reset();
-    }
+}
     
     return(
     <div id="addTaskContainer">

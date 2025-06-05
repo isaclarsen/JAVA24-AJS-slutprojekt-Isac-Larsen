@@ -1,12 +1,15 @@
+// App.jsx - Huvudkomponent som hanterar global state, databaslyssning och layout
+// Importerar nödvändiga komponenter och Firebase-funktioner
 import {createRoot} from "react-dom/client"
 import { Header } from "./components/header/Header";
-import { TeamMember } from "./components/team_member/TeamMember";
+import { TeamMember } from "./components/team_member/TeamMemberPanel";
 import { FilterSort } from "./components/filter_sort/FilterSort";
 import { TaskBoard } from "./components/task_board/TaskBoard";
 import { useEffect, useState } from "react";
-import { onValue, push, ref, remove, update } from "firebase/database";
+import { onValue, ref } from "firebase/database";
 import { dataBase } from "./firebase/firebaseconfig";
 
+// Lista av kategorier som kan tilldelas uppgifter och teammedlemmar
 const categories = ["UX", "Backend", "Frontend", "Fullstack", "LIA"]
 
 function App(){
@@ -21,72 +24,6 @@ function App(){
     const [sortBy, setSortBy] = useState("timestamp");
     const [sortDirection, setSortDirection] = useState("asc");
     const [searchQuery, setSearchQuery] = useState("");
-
-    
-    // ADD TASK
-    function addTask({task, category}){
-
-        //Till ISOString för att kunna validera sortering
-        const timestamp = new Date().toISOString();
-
-        try{
-            const taskId = push(tasksRef).key;
-            const newTasksRef = ref(dataBase, "tasks/" + taskId);
-    
-            const newTask = {
-                task: task,
-                category: category,
-                timestamp: timestamp,
-                status: "new", //Standard för ny task är "new"
-                member: ""
-            };
-    
-                update(newTasksRef, newTask);
-    
-            }catch(error){
-                console.error("Something went wrong: " + error)
-            };
-        }
-    
-    // UPDATE TASK
-    function updateTask(task){
-        const taskRef = ref(dataBase, `/tasks/${task.id}`);
-        //Från "New" => "In-progress"
-        if(task.status === "new"){
-            update(taskRef, {status: "in-progress", member: task.member})
-            .catch(error => console.log(error));
-        //Från "In-Progress" => "Finished"
-        }else if(task.status === "in-progress"){
-            update(taskRef, {status: "finished"})
-            .catch(error => console.log(error));
-        };
-    }
-
-    //DELETE TASK
-    function deleteTask(taskId){
-        const taskRef = ref(dataBase, `/tasks/${taskId}`);
-
-        remove(taskRef);
-    }
-
-    function changeTheme(theme) {
-        const root = document.documentElement;
-
-        if(theme === "original"){
-            root.style.setProperty('--colorTheme', 'rgba(118, 232, 83, 0.642)');
-
-        }else if (theme === "red") {
-            root.style.setProperty('--colorTheme', 'rgba(220, 1, 30, 0.64)');
-
-        } else if (theme === "blue") {
-            root.style.setProperty('--colorTheme', 'rgba(83, 179, 232, 0.642)');
-
-        } else if (theme === "pink") {
-            root.style.setProperty('--colorTheme', 'rgba(232, 83, 168, 0.642)');
-        }
-        
-}
-
 
 
     //FILTER, SORT & SEARCH
@@ -113,7 +50,7 @@ function App(){
 
 
 
-    //FETCH MEMBERS
+    //FETCH MEMBERS FROM FIREBASE
     useEffect(() => {
     
         onValue(membersRef, (snapshot) => {
@@ -133,7 +70,7 @@ function App(){
         return;
     },[])
 
-     //FETCH TASKS
+     //FETCH TASKS FROM FIREBASE
     useEffect(() => {
         
         onValue(tasksRef, (snapshot) => {
@@ -156,7 +93,7 @@ function App(){
 
     return(
         <div id="container">
-            <Header changeTheme={changeTheme}/>
+            <Header/>
             <div id="topSection">
                 <div id="leftSidebar">
                     <TeamMember categories={categories} members={members}/>
@@ -177,9 +114,6 @@ function App(){
                 categories={categories}
                 members={members}
                 filteredTasks={filteredTasks}
-                addTask={addTask}
-                updateTask={updateTask}
-                deleteTask={deleteTask}
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
                 />

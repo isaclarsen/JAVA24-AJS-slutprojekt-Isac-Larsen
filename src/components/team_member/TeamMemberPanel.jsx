@@ -1,3 +1,5 @@
+// TeamMemberPanel.jsx – Wrapper-komponent som innehåller formuläret och listan över teammedlemmar
+
 import { TeamMemberForm } from "./TeamMemberForm";
 import { TeamMemberList } from "./TeamMemberList";
 import { push, ref, remove, update } from "firebase/database";

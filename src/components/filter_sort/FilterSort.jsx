@@ -1,3 +1,4 @@
+// FilterSort.jsx – Formulär för att filtrera och sortera tasks baserat på medlem, kategori, sortfält och riktning
 import { FilterOptions } from "./FilterOptions";
 import { SortOptions } from "./SortOptions";
 
