@@ -3,7 +3,7 @@ import { ref, remove } from "firebase/database";
 import { TeamMemberCard } from "./TeamMemberCard";
 import { dataBase } from "../../firebase/firebaseconfig";
 
-export function TeamMemberList({members, deleteMember}){
+export function TeamMemberList({members}){
 
     function deleteMember(memberId){
             const memberRef = ref(dataBase, `/members/${memberId}`)

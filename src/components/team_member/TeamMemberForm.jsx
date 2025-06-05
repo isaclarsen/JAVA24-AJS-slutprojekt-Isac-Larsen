@@ -2,7 +2,7 @@
 import { push, ref, update } from "firebase/database";
 import { dataBase } from "../../firebase/firebaseconfig";
 
-export function TeamMemberForm({categories, addMember}){
+export function TeamMemberForm({categories}){
 
     //Lägger in medlemmar i databas
     function addMember({name, category}){
