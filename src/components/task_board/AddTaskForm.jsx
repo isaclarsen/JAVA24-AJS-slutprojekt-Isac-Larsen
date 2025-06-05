@@ -1,3 +1,5 @@
+
+// AddTaskForm.jsx - Hanterar ett formulär där tasks kan läggas in i databas
 import { push, ref, update } from "firebase/database";
 import { dataBase } from "../../firebase/firebaseconfig";
 

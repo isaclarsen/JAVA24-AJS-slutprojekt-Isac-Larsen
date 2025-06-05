@@ -1,3 +1,4 @@
+// SerachTaskForm.jsx - Hanterar input från search task formuläret.
 export function SearchTaskForm({searchQuery, setSearchQuery}){
     return(
         <div id="searchTaskContainer">

@@ -1,5 +1,28 @@
+// TeamMemberForm.jsx - Hanterar formuläret för att lägga in nya medlemmar i databas 
+import { push, ref, update } from "firebase/database";
+import { dataBase } from "../../firebase/firebaseconfig";
+
 export function TeamMemberForm({categories, addMember}){
 
+    //Lägger in medlemmar i databas
+    function addMember({name, category}){
+        const membersRef = ref(dataBase, "/members");
+            try{
+                const memberId = push(membersRef).key;
+                const newMembersRef = ref(dataBase, "members/" + memberId);
+    
+                const newMember = {
+                    name: name,
+                    category: category
+                };
+    
+                update(newMembersRef, newMember);
+    
+            }catch(error){
+                console.error("Something went wrong: " + error)
+            }
+        }
+    //Hanterar input
     function handleSubmit(event){
         event.preventDefault();
         const formData = new FormData(event.target)
